@@ -106,6 +106,21 @@ struct ahb *host_get_ahb(struct host *ctx)
     return bridge ? bridge->ahb : NULL;
 }
 
+int host_bridge_release_from_ahb(struct host *ctx, struct ahb *ahb)
+{
+    struct bridge *bridge, *next;
+
+    list_for_each_safe(&ctx->bridges, bridge, next, entry) {
+        if (bridge->ahb != ahb) {
+            continue;
+        }
+
+        return bridge->driver->release ? bridge->driver->release(bridge->ahb) : 0;
+    }
+
+    return 0;
+}
+
 int host_bridge_reinit_from_ahb(struct host *ctx, struct ahb *ahb)
 {
     struct bridge *bridge, *next;

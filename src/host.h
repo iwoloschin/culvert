@@ -18,6 +18,7 @@ int host_init(struct host *ctx, int argc, char *argv[]);
 void host_destroy(struct host *ctx);
 
 struct ahb *host_get_ahb(struct host *ctx);
+int host_bridge_release_from_ahb(struct host *ctx, struct ahb *ahb);
 int host_bridge_reinit_from_ahb(struct host *ctx, struct ahb *ahb);
 
 #endif
